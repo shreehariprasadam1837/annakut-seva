@@ -284,6 +284,8 @@ dialog.poly::after{content:"";position:fixed;top:0;left:0;right:0;bottom:0;backg
 .rowbtns{display:flex;flex-direction:column;gap:6px}
 @media(prefers-reduced-motion:reduce){.mandala,.motif,.big,.spin,.kandil,.burst,.twinkles b,.diyas .flame{animation:none}.burst{display:none}}
 html:not([lang=en]) .caps,html:not([lang=en]) .badge,html:not([lang=en]) .eyebrow,html:not([lang=en]) .contact .tn{letter-spacing:.03em;text-transform:none}
+.plate-hero{display:block;margin:6px 0 10px;font-weight:700;font-size:clamp(26px,5.6vw,40px);line-height:1.2;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+.plate-hero::before,.plate-hero::after{content:'❖';color:var(--gold);font-size:.5em;vertical-align:middle;margin:0 .5em}
 .plate-h{text-align:center;margin:0 0 22px;padding:4px 4px 0}
 .plate-h .plate-orn{display:block;color:var(--gold);font-size:22px;line-height:1;margin-bottom:6px}
 .plate-h h2{margin:0;font-weight:700;font-size:clamp(26px,6.4vw,38px);line-height:1.2;color:var(--m7)}
@@ -447,7 +449,7 @@ function saveSel(){store.set('sel',[...sel])}
 function renderChrome(){
   document.documentElement.lang = lang;
   document.querySelectorAll('.langs button').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===lang));
-  $('#t-sub').innerHTML = `<b class="when">${esc(t().dateV)}</b>${esc(t().sub)}`;
+  $('#t-sub').innerHTML = `<b class="when">${esc(t().dateV)}</b><span class="plate-hero">${esc(t().plate)}</span>${esc(t().sub)}`;
   $('#hero').classList.toggle('compact', view.v!=='home');
   $('#t-pre').textContent=t().pre; $('#t-home').textContent=t().home; $('#t-badge').textContent=t().badge;
   $('#t-title').innerHTML=`${esc(t().title)}<span class="year">2026</span>`;
@@ -495,7 +497,7 @@ function render(focus){
   const step=(n,title,sub)=>`<div class="step"><span class="step-no">${n}</span><h2>${esc(title)}</h2></div>${sub?`<p class="sub">${esc(sub)}</p>`:''}`;
   if(view.v==='home'){
     const mine=store.get('mine',null), me=store.get('me',{});
-    h = `${editBar()}<section class="card"><div class="plate-h"><span class="plate-orn" aria-hidden="true">❖</span><h2>${esc(t().plate)}</h2><p>${esc(t().plateSub)}</p><span class="plate-line" aria-hidden="true"></span></div>${step('✦',t().pick,t().pickLead)}${ruleBox()}${searchBox()}<div id="res">${resultsHtml()}</div></section>
+    h = `${editBar()}<section class="card">${step('✦',t().pick,t().pickLead)}${ruleBox()}${searchBox()}<div id="res">${resultsHtml()}</div></section>
       ${customBox()}
       ${edit?'':`<section class="card" id="manage">${step('✎',t().already,t().alreadyLead)}
       ${mine?`<p><button class="btn gold" data-act="mine">${esc(t().changeBtn)} · ${esc(mine.ref)}</button></p>`:''}
